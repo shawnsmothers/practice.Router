@@ -35,11 +35,7 @@ function RenderComments ({comments}){
                         <p>--{" "}{comment.author}{", "}
                     {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}</p> 
                         
-                     
-                   
-                  
-
-                    </div>
+                      </div>
                     ))}
 
              </div>
@@ -69,7 +65,7 @@ function CampsiteInfo (props){
             
             <div className="row">
                 <RenderCampsite campsite={props.campsite}/>
-                <RenderComments comments={props.campsite.comments}/>
+                
                 <RenderComments comments={props.comments} />
 
             </div>
