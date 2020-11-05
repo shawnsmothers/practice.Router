@@ -14,6 +14,7 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import { Control, LocalForm, Errors } from "react-redux-form";
+import { Loading } from './LoadingComponent';
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !val || val.length <= len;
@@ -81,12 +82,12 @@ class CommentForm extends Component {
                 </Control.select>
               </div>
               <div className="form-group">
-                <Label htmlFor="name">Your Name</Label>
+                <Label htmlFor="author">Your Name</Label>
                 <Control.text
-                  model=".name"
+                  model=".author"
                   className="form-control"
-                  id="name"
-                  name="name"
+                  id="author"
+                  name="author"
                   placeholder="Name"
                   validators={{
                     required,
@@ -96,7 +97,7 @@ class CommentForm extends Component {
                 />
                 <Errors
                   className="text-danger"
-                  model=".name"
+                  model=".author"
                   show="touched"
                   component="div"
                   messages={{
@@ -107,13 +108,13 @@ class CommentForm extends Component {
                 />
               </div>
               <div className="form-group">
-                <Label htmlFor="comment">Comment</Label>
+                <Label htmlFor="text">Comment</Label>
                 <Control.textarea
                   rows="10"
-                  model=".comment"
-                  name="comment"
+                  model=".text"
+                  name="text"
                   placeholder="Comment"
-                  id="comment"
+                  id="text"
                   className="form-control"
                 ></Control.textarea>
               </div>
@@ -170,6 +171,29 @@ function RenderComments({comments, addComment, campsiteId}) {
 }
 
 function CampsiteInfo(props) {
+
+  if (props.isLoading) {
+    return (
+        <div className="container">
+            <div className="row">
+                <Loading />
+            </div>
+        </div>
+    );
+}
+if (props.errMess) {
+    return (
+        <div className="container">
+            <div className="row">
+                <div className="col">
+                    <h4>{props.errMess}</h4>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+
   if (props.campsite) {
     return (
       <div className="container">
@@ -189,10 +213,10 @@ function CampsiteInfo(props) {
         <div className="row">
           <RenderCampsite campsite={props.campsite} />
 
-          <RenderComments
-            comments={props.comments}
-            addComment={props.addComment}
-            campsiteId={props.campsite.id}
+          <RenderComments 
+                        comments={props.comments}
+                        addComment={props.addComment}
+                        campsiteId={props.campsite.id}
           />
         </div>
       </div>
